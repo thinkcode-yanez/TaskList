@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TaskList</string>
+    <string name="buscar_tarea">Buscar Tarea</string>
+</resources>
