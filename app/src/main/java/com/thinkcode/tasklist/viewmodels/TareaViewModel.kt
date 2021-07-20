@@ -16,7 +16,7 @@ class TareaViewModel:ViewModel() {
 
     var id=MutableLiveData<Long>()
     var nombretarea=MutableLiveData<String>()
-    val checked:Boolean=false
+    var checked:Boolean=false
     var priority=MutableLiveData<Boolean>()
     var fecha=MutableLiveData<String>()
 
@@ -72,6 +72,8 @@ class TareaViewModel:ViewModel() {
 
 
     }
+
+
 
     fun cargarDatos() {
         viewModelScope.launch {

@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Tarea(
     val nombre:String,
     val prioridad:Boolean=false,
-    val realizado:Boolean=false,
+    var realizado:Boolean=false,
     val fecha:String,
     @PrimaryKey(autoGenerate = true)
     var id:Long

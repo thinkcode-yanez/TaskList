@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding:ActivityMainBinding
     val mainViewModel:MainViewModel by viewModels()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
@@ -32,7 +34,17 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.tareasList.observe(this, Observer {
             binding.myMainRecycler.adapter=TareaAdapter(it)
+            Toast.makeText(this,"Si entro a tarealist",Toast.LENGTH_LONG).show()
 
+        })
+
+        mainViewModel.cargaWIN.observe(this, Observer {
+            if(it){
+                Toast.makeText(this,"Si cargo bien el check",Toast.LENGTH_LONG).show()
+                binding.myMainRecycler.refreshDrawableState()
+            }else{
+                Toast.makeText(this,"no cargo nada",Toast.LENGTH_LONG).show()
+            }
         })
 
         binding.etBuscar.addTextChangedListener(object:TextWatcher{
@@ -59,5 +71,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
 
         }
+    }
+    fun actualizar(){
+        mainViewModel.tareasList.observe(this, Observer {
+            binding.myMainRecycler.adapter=TareaAdapter(it)
+
+
+        })
     }
 }
