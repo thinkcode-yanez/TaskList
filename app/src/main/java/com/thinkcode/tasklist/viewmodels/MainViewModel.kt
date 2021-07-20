@@ -1,5 +1,6 @@
 package com.thinkcode.tasklist.viewmodels
 
+import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -37,6 +38,15 @@ class MainViewModel : ViewModel() {
                Log.d("mensaje","Id = ${tarea.id},nombre: ${tarea.nombre} fecja ${tarea.fecha}")
            }
        }
+    }
+
+    fun buscarTarea(p0: Editable?) {
+
+        viewModelScope.launch {
+            tareasList.value = withContext(Dispatchers.IO){
+                db.tareasDao().getByName(p0.toString())
+            }!!
+        }
     }
 
 }

@@ -10,21 +10,24 @@ import androidx.lifecycle.Observer
 import com.thinkcode.tasklist.MainActivity
 import com.thinkcode.tasklist.config.Constantes
 import com.thinkcode.tasklist.databinding.ActivityInsertTareaBinding
+import com.thinkcode.tasklist.dialogos.BorrarDialogo
 import com.thinkcode.tasklist.viewmodels.TareaViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class InsertTareaActivity : AppCompatActivity() {
+class InsertTareaActivity : AppCompatActivity(),BorrarDialogo.BorrarListener {
 
     lateinit var binding:ActivityInsertTareaBinding
      val tareaViewModel:TareaViewModel by viewModels()
     val currentDateTime: LocalDateTime? = LocalDateTime.now()
+    lateinit var dialogo: BorrarDialogo
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityInsertTareaBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        dialogo=BorrarDialogo(this)//inicializar dialogo
         binding.tvFechacreada.text = currentDateTime!!.format(DateTimeFormatter.ISO_DATE)
 
         tareaViewModel.operacion = intent.getStringExtra(Constantes.OPERACION_KEY)!!
@@ -42,6 +45,9 @@ class InsertTareaActivity : AppCompatActivity() {
             val prioridad=binding.checkboxImportancia.isChecked
             val fecha=binding.tvFechacreada.text.toString()
             tareaViewModel.guardarTarea(tareaname,prioridad,fecha)
+        }
+        binding.btnBorrar.setOnClickListener {
+            mostrarDialogo()
         }
 
         tareaViewModel.operacionExitosa.observe(this, Observer {
@@ -76,6 +82,10 @@ class InsertTareaActivity : AppCompatActivity() {
 
     }
 
+    private fun mostrarDialogo() {
+        dialogo.show(supportFragmentManager,"Dialogo Borrar")
+    }
+
     private fun irAlInicio() {
         val intent= Intent(applicationContext,MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -84,5 +94,9 @@ class InsertTareaActivity : AppCompatActivity() {
 
     private fun mostrarMensaje(s: String) {
         Toast.makeText(applicationContext,s,Toast.LENGTH_LONG).show()
+    }
+
+    override fun borrarTarea() {
+        tareaViewModel.eliminarTarea()
     }
 }

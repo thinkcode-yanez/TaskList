@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">TaskList</string>
     <string name="buscar_tarea">Buscar Tarea</string>
+    <string name="borrar_tarea">Borrar Tarea?</string>
+    <string name="yes">Si, Aceptar.</string>
+    <string name="cancel">Cancelar</string>
 </resources>

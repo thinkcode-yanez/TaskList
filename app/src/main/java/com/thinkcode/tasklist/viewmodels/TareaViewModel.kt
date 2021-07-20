@@ -92,4 +92,17 @@ class TareaViewModel:ViewModel() {
 
 
     }
+
+    fun eliminarTarea() {
+
+        var mTarea= Tarea("",priority.value!!,checked,"",id.value!!)
+        viewModelScope.launch {
+            val result= withContext(Dispatchers.IO){
+
+                db.tareasDao().deleteAll(mTarea)
+
+            }
+            operacionExitosa.value=(result>0)
+        }
+    }
 }

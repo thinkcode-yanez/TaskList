@@ -2,6 +2,8 @@ package com.thinkcode.tasklist
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -31,6 +33,24 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.tareasList.observe(this, Observer {
             binding.myMainRecycler.adapter=TareaAdapter(it)
 
+        })
+
+        binding.etBuscar.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if(p0.toString().isNotEmpty()){
+                    mainViewModel.buscarTarea(p0)
+                }else if(p0.toString().isEmpty()){
+                    mainViewModel.start()
+                }
+            }
         })
 
         binding.btnAbrirFormulario.setOnClickListener {

@@ -10,6 +10,9 @@ interface TareasDao {
     @Query("SELECT * FROM tarea_tabla")
     suspend fun getAll():List<Tarea>
 
+    @Query("SELECT * FROM tarea_tabla WHERE nombre LIKE '%'|| :name || '%'")
+    suspend fun getByName(name:String):List<Tarea>
+
     @Query("SELECT * FROM tarea_tabla WHERE id= :id")
     suspend fun getById(id:Long):Tarea
 
