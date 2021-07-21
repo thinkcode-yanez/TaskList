@@ -26,4 +26,7 @@ interface TareasDao {
     suspend fun deleteAll(tarea:Tarea):Int
 
 
+
+
+
 }

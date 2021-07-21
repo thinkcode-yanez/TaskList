@@ -8,14 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="4dp"
         android:padding="8dp">
 
         <EditText
             android:id="@+id/et_InputTarea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="5"
             android:hint="Add the task"
-            android:inputType="text"/>
+            android:inputType="textCapSentences|textMultiLine"/>
         <CheckBox
             android:id="@+id/checkbox_importancia"
             android:layout_width="match_parent"
@@ -25,6 +27,7 @@
             android:id="@+id/tv_fechacreada"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             tools:text="Date created: "/>
 
         <LinearLayout

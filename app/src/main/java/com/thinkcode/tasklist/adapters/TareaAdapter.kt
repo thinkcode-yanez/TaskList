@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -36,8 +37,6 @@ class TareaAdapter(private val dataSet: List<Tarea>) :
         viewHolder.enlazarItem(item!!)
 
 
-
-
         //item.realizado
     }
 
@@ -52,12 +51,14 @@ class TareaAdapter(private val dataSet: List<Tarea>) :
         val mainModelo=MainActivity()
 
 
-
         fun enlazarItem(item: Tarea) {
 
-            binding.checkRealizado.isSelected = item.realizado
-             binding.etTarea.paint.isStrikeThruText=item.realizado
-            binding.checkRealizado.isChecked=item.realizado
+            binding.checkRealizado.isChecked = item.realizado
+            // binding.etTarea.paint.isStrikeThruText=item.realizado
+            if(item.realizado){
+                binding.etTarea.paint.isStrikeThruText=item.realizado
+                binding.etTarea.setTextColor(ContextCompat.getColor(context,R.color.design_default_color_error))
+            }
             binding.etTarea.text = item.nombre
             binding.tvFecha.text = item.fecha
             binding.imPrioridad.isVisible = item.prioridad
@@ -73,8 +74,9 @@ class TareaAdapter(private val dataSet: List<Tarea>) :
             binding.checkRealizado.setOnClickListener {
 
                 if (binding.checkRealizado.isChecked) {
-                    binding.etTarea.paint.isStrikeThruText = true
+
                     item.realizado = true
+                    binding.etTarea.paint.isStrikeThruText=item.realizado
                     exitoso.value = true
                     modelo.guardarCheck(
                         item.realizado,
@@ -83,13 +85,12 @@ class TareaAdapter(private val dataSet: List<Tarea>) :
                         item.prioridad,
                         item.id
                     )
-
-
-                   //Toast.makeText(context,"Seleccionado",Toast.LENGTH_LONG).show()
+                    binding.etTarea.setTextColor(ContextCompat.getColor(context,R.color.design_default_color_error))
 
                 } else {
-                    binding.etTarea.paint.isStrikeThruText = true
+                   // binding.etTarea.paint.isStrikeThruText = true
                     item.realizado = false
+                    binding.etTarea.paint.isStrikeThruText=item.realizado
                     modelo.guardarCheck(
                         item.realizado,
                         item.nombre,
@@ -97,9 +98,10 @@ class TareaAdapter(private val dataSet: List<Tarea>) :
                         item.prioridad,
                         item.id
                     )
-                    //Toast.makeText(context,"No seleccionado",Toast.LENGTH_LONG).show()
+                    binding.etTarea.setTextColor(ContextCompat.getColor(context,R.color.black))
                 }
             }
+
 
 
         }

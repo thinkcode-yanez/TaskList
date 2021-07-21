@@ -11,11 +11,10 @@
         android:id="@+id/etBuscar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="10dp"
         android:layout_marginBottom="5dp"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:imeOptions="flagNoFullscreen"
-        android:ems="10"
         android:hint="Search Task"
         android:inputType="textPersonName"
         android:textStyle="bold" />
@@ -25,6 +24,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="9"/>
+    <Button
+        android:id="@+id/btn_borrarSelected"
+        android:text="Borrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAbrirFormulario"

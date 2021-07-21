@@ -15,7 +15,7 @@ class MainViewModel : ViewModel() {
 
     val tareasList = MutableLiveData<List<Tarea>>()
     var busqueda = MutableLiveData<String>()
-    val cargaWIN = MutableLiveData<Boolean>()
+    var cargaWIN = MutableLiveData<Boolean>()
 
 
 
@@ -61,18 +61,28 @@ class MainViewModel : ViewModel() {
     ) {
 
        var mTarea= Tarea(nombre,prioridad,realizado,fecha,id)
-
-
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
                 db.tareasDao().updateTarea(mTarea)
             }
-            cargaWIN.value=true
+          //  cargaWIN.value=true
 
         }
-
-
         Log.d("mensajeMV",mTarea.toString())
+    }
+    fun deleteChecked(){
+        for(tarea in tareasList.value!!){
+            if (tarea.realizado){
+                val mTarea=Tarea(tarea.nombre,tarea.prioridad,tarea.realizado,tarea.fecha,tarea.id)
+                viewModelScope.launch {
+                    val result= withContext(Dispatchers.IO){
+                        db.tareasDao().deleteAll(mTarea)
+                    }
+                    cargaWIN.value=(result>0)
+                }
+
+            }
+        }
     }
 
 

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -17,13 +16,13 @@ import com.thinkcode.tasklist.viewmodels.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding:ActivityMainBinding
-    val mainViewModel:MainViewModel by viewModels()
+    lateinit var binding: ActivityMainBinding
+    val mainViewModel: MainViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         mainViewModel.start()
 
@@ -33,21 +32,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.tareasList.observe(this, Observer {
-            binding.myMainRecycler.adapter=TareaAdapter(it)
-            Toast.makeText(this,"Si entro a tarealist",Toast.LENGTH_LONG).show()
+            binding.myMainRecycler.adapter = TareaAdapter(it)
+        //    Toast.makeText(this, "Si entro a tarealist", Toast.LENGTH_LONG).show()
+        //    binding.myMainRecycler.adapter?.notifyDataSetChanged()//boorar after test
+            //mainViewModel.start()//borrar after test
 
         })
 
         mainViewModel.cargaWIN.observe(this, Observer {
-            if(it){
-                Toast.makeText(this,"Si cargo bien el check",Toast.LENGTH_LONG).show()
-                binding.myMainRecycler.refreshDrawableState()
-            }else{
-                Toast.makeText(this,"no cargo nada",Toast.LENGTH_LONG).show()
-            }
+              //  Toast.makeText(this,"Cargo el check win",Toast.LENGTH_LONG).show()
+                binding.myMainRecycler.adapter = TareaAdapter(mainViewModel.tareasList.value!!)
+               // binding.myMainRecycler.adapter?.notifyDataSetChanged()
+                mainViewModel.start()
+
         })
 
-        binding.etBuscar.addTextChangedListener(object:TextWatcher{
+        binding.etBuscar.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
@@ -57,26 +57,29 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                if(p0.toString().isNotEmpty()){
+                if (p0.toString().isNotEmpty()) {
                     mainViewModel.buscarTarea(p0)
-                }else if(p0.toString().isEmpty()){
+                } else if (p0.toString().isEmpty()) {
                     mainViewModel.start()
                 }
             }
         })
 
         binding.btnAbrirFormulario.setOnClickListener {
-            val intent=Intent(this,InsertTareaActivity::class.java)
-            intent.putExtra(Constantes.OPERACION_KEY,Constantes.OPERACION_INSERTAR)
+            val intent = Intent(this, InsertTareaActivity::class.java)
+            intent.putExtra(Constantes.OPERACION_KEY, Constantes.OPERACION_INSERTAR)
             startActivity(intent)
 
         }
-    }
-    fun actualizar(){
-        mainViewModel.tareasList.observe(this, Observer {
-            binding.myMainRecycler.adapter=TareaAdapter(it)
+
+        binding.btnBorrarSelected.setOnClickListener {
+            mainViewModel.deleteChecked()
+           // binding.myMainRecycler.adapter = TareaAdapter(mainViewModel.tareasList.value!!)
+           // binding.myMainRecycler.adapter?.notifyDataSetChanged()
+        }
 
 
-        })
     }
+
+
 }
