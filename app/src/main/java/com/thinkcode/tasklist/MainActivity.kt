@@ -72,6 +72,10 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        binding.btnALL.setOnClickListener {
+            mainViewModel.mostrarPorCategoria("Work")
+        }
+
 
     }
 
@@ -87,6 +91,9 @@ class MainActivity : AppCompatActivity() {
             R.id.nav_delete->mainViewModel.deleteChecked()
             R.id.nav_priority->mainViewModel.getByPriority()
             R.id.nav_all->mainViewModel.start()
+            R.id.nav_work->mainViewModel.mostrarPorCategoria("Work")
+            R.id.nav_home->mainViewModel.mostrarPorCategoria("Home")
+            R.id.nav_Shopping->mainViewModel.mostrarPorCategoria("Shopping")
 
         }
         return super.onOptionsItemSelected(item)

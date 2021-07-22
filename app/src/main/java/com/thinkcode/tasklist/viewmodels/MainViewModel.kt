@@ -18,7 +18,6 @@ class MainViewModel : ViewModel() {
     var cargaWIN = MutableLiveData<Boolean>()
 
 
-
     fun start() {
 
         viewModelScope.launch {
@@ -57,28 +56,37 @@ class MainViewModel : ViewModel() {
         nombre: String,
         fecha: String,
         prioridad: Boolean,
+        cateoria: String,
         id: Long
     ) {
 
-       var mTarea= Tarea(nombre,prioridad,realizado,fecha,id)
+        var mTarea = Tarea(nombre, prioridad, realizado, fecha, cateoria, id)
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
                 db.tareasDao().updateTarea(mTarea)
             }
-          //  cargaWIN.value=true
+            //  cargaWIN.value=true
 
         }
-        Log.d("mensajeMV",mTarea.toString())
+        Log.d("mensajeMV", mTarea.toString())
     }
-    fun deleteChecked(){
-        for(tarea in tareasList.value!!){
-            if (tarea.realizado){
-                val mTarea=Tarea(tarea.nombre,tarea.prioridad,tarea.realizado,tarea.fecha,tarea.id)
+
+    fun deleteChecked() {
+        for (tarea in tareasList.value!!) {
+            if (tarea.realizado) {
+                val mTarea = Tarea(
+                    tarea.nombre,
+                    tarea.prioridad,
+                    tarea.realizado,
+                    tarea.fecha,
+                    tarea.category,
+                    tarea.id
+                )
                 viewModelScope.launch {
-                    val result= withContext(Dispatchers.IO){
+                    val result = withContext(Dispatchers.IO) {
                         db.tareasDao().deleteAll(mTarea)
                     }
-                    cargaWIN.value=(result>0)
+                    cargaWIN.value = (result > 0)
                 }
 
             }
@@ -86,11 +94,11 @@ class MainViewModel : ViewModel() {
     }
 
     fun getByPriority() {
-        for(tarea in tareasList.value!!){
+        for (tarea in tareasList.value!!) {
 
-            if (tarea.prioridad==true){
+            if (tarea.prioridad == true) {
                 viewModelScope.launch {
-                    tareasList.value = withContext(Dispatchers.IO){
+                    tareasList.value = withContext(Dispatchers.IO) {
                         db.tareasDao().getByPrioridad(tarea.prioridad)
                     }!!
                 }
@@ -102,6 +110,17 @@ class MainViewModel : ViewModel() {
 
     }
 
+    fun mostrarPorCategoria(s: String) {
+
+        val id=s
+        viewModelScope.launch {
+            tareasList.value= withContext(Dispatchers.IO){
+                db.tareasDao().getByCategory(id)
+            }!!
+        }
+
+
+    }
 
 
 }

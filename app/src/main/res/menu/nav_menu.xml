@@ -8,12 +8,25 @@
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/nav_priority"
+        android:titleCondensed="hola"
         android:icon="@drawable/ic_delete"
         android:title="Mostrar Importantes"
         app:showAsAction="never"/>
     <item android:id="@+id/nav_all"
         android:icon="@drawable/ic_delete"
         android:title="Mostrar Todos"
+        app:showAsAction="never"/>
+    <item android:id="@+id/nav_work"
+        android:icon="@drawable/ic_delete"
+        android:title="Mostrar Work"
+        app:showAsAction="never"/>
+    <item android:id="@+id/nav_home"
+        android:icon="@drawable/ic_delete"
+        android:title="Mostrar Home"
+        app:showAsAction="never"/>
+    <item android:id="@+id/nav_Shopping"
+        android:icon="@drawable/ic_delete"
+        android:title="Mostrar Shopping"
         app:showAsAction="never"/>
 
 

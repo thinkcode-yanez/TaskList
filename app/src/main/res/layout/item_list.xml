@@ -69,7 +69,7 @@
             android:textSize="15sp"
             android:textStyle="italic"
             android:layout_marginStart="10dp"
-            android:text="Categoria">
+            tools:text="Categoria">
 
         </TextView>
         <TextView

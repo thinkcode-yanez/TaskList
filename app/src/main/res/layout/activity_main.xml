@@ -15,8 +15,8 @@
         android:layout_marginBottom="5dp"
         android:layout_weight="0.5"
         android:drawableStart="@drawable/ic_search"
-        android:imeOptions="flagNoFullscreen"
         android:hint="Search Task"
+        android:imeOptions="flagNoFullscreen"
         android:inputType="textPersonName"
         android:textStyle="bold" />
 
@@ -24,23 +24,23 @@
         android:id="@+id/myMainRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9"/>
+        android:layout_weight="9" />
 
 
     <Button
         android:id="@+id/btn_ALL"
-        android:text="Todo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        android:text="Test"
+        android:visibility="gone" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAbrirFormulario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="4dp"
-        android:src="@drawable/ic_add"
-        android:layout_gravity="center_horizontal"/>
+        android:src="@drawable/ic_add" />
 
 
 </LinearLayout>

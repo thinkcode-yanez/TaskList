@@ -62,6 +62,8 @@ class TareaAdapter(private val dataSet: List<Tarea>) :
             binding.etTarea.text = item.nombre
             binding.tvFecha.text = item.fecha
             binding.imPrioridad.isVisible = item.prioridad
+            //Extra Category
+            binding.tvCategoria.text = item.category
 
 
             binding.root.setOnClickListener {
@@ -83,6 +85,7 @@ class TareaAdapter(private val dataSet: List<Tarea>) :
                         item.nombre,
                         item.fecha,
                         item.prioridad,
+                        item.category,
                         item.id
                     )
                     binding.etTarea.setTextColor(ContextCompat.getColor(context,R.color.design_default_color_error))
@@ -96,6 +99,7 @@ class TareaAdapter(private val dataSet: List<Tarea>) :
                         item.nombre,
                         item.fecha,
                         item.prioridad,
+                        item.category,
                         item.id
                     )
                     binding.etTarea.setTextColor(ContextCompat.getColor(context,R.color.black))

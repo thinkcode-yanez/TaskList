@@ -25,10 +25,6 @@
             android:layout_height="wrap_content"
             android:text="Tarea Importante" />
 
-
-
-
-
             <TextView
                 android:id="@+id/tv_fechacreada"
                 android:layout_width="wrap_content"
@@ -63,8 +59,42 @@
                 android:text="Borrar" />
 
         </LinearLayout>
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rbWork"
+                android:text="Work"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <RadioButton
+                android:id="@+id/rbHome"
+                android:text="Home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <RadioButton
+                android:id="@+id/rbShop"
+                android:text="Shopping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <RadioButton
+                android:id="@+id/rbOther"
+                android:text="Other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RadioGroup>
+        <Button
+            android:id="@+id/btntest"
+            android:text="test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
