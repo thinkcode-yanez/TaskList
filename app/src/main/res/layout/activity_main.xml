@@ -14,6 +14,7 @@
         android:layout_margin="10dp"
         android:layout_marginBottom="5dp"
         android:layout_weight="0.5"
+        android:drawableStart="@drawable/ic_search"
         android:imeOptions="flagNoFullscreen"
         android:hint="Search Task"
         android:inputType="textPersonName"
@@ -24,11 +25,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="9"/>
+
+
     <Button
-        android:id="@+id/btn_borrarSelected"
-        android:text="Borrar"
+        android:id="@+id/btn_ALL"
+        android:text="Todo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAbrirFormulario"

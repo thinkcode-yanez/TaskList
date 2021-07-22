@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     val mainViewModel: MainViewModel by viewModels()
+    var click=1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,21 +36,18 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.tareasList.observe(this, Observer {
             binding.myMainRecycler.adapter = TareaAdapter(it)
-        //    Toast.makeText(this, "Si entro a tarealist", Toast.LENGTH_LONG).show()
-        //    binding.myMainRecycler.adapter?.notifyDataSetChanged()//boorar after test
-            //mainViewModel.start()//borrar after test
 
         })
 
         mainViewModel.cargaWIN.observe(this, Observer {
-              //  Toast.makeText(this,"Cargo el check win",Toast.LENGTH_LONG).show()
                 binding.myMainRecycler.adapter = TareaAdapter(mainViewModel.tareasList.value!!)
-               // binding.myMainRecycler.adapter?.notifyDataSetChanged()
                 mainViewModel.start()
 
         })
 
         binding.etBuscar.addTextChangedListener(object : TextWatcher {
+
+
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
@@ -72,13 +72,24 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        binding.btnBorrarSelected.setOnClickListener {
-            mainViewModel.deleteChecked()
-           // binding.myMainRecycler.adapter = TareaAdapter(mainViewModel.tareasList.value!!)
-           // binding.myMainRecycler.adapter?.notifyDataSetChanged()
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.nav_menu,menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            R.id.nav_delete->mainViewModel.deleteChecked()
+            R.id.nav_priority->mainViewModel.getByPriority()
+            R.id.nav_all->mainViewModel.start()
+
         }
-
-
+        return super.onOptionsItemSelected(item)
     }
 
 

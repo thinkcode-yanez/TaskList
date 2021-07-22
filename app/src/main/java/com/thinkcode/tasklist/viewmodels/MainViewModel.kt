@@ -85,5 +85,23 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun getByPriority() {
+        for(tarea in tareasList.value!!){
+
+            if (tarea.prioridad==true){
+                viewModelScope.launch {
+                    tareasList.value = withContext(Dispatchers.IO){
+                        db.tareasDao().getByPrioridad(tarea.prioridad)
+                    }!!
+                }
+
+            }
+
+
+        }
+
+    }
+
+
 
 }

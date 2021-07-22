@@ -1,56 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="4dp"
+        android:orientation="vertical"
         android:padding="8dp">
 
         <EditText
             android:id="@+id/et_InputTarea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="5"
             android:hint="Add the task"
-            android:inputType="textCapSentences|textMultiLine"/>
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLines="5" />
+
         <CheckBox
             android:id="@+id/checkbox_importancia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tarea Importante"/>
-        <TextView
-            android:id="@+id/tv_fechacreada"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            tools:text="Date created: "/>
+            android:text="Tarea Importante" />
+
+
+
+
+
+            <TextView
+                android:id="@+id/tv_fechacreada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textSize="15sp"
+                tools:text="Date created: " />
+
+
 
         <LinearLayout
             android:id="@+id/linearEditar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="16dp"
             android:gravity="center_horizontal"
+            android:orientation="horizontal"
             android:visibility="gone">
 
 
             <Button
                 android:id="@+id/btnEditar"
-                android:text="Editar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"/>
+                android:layout_marginRight="4dp"
+                android:text="Editar" />
+
             <Button
                 android:id="@+id/btnBorrar"
-                android:text="Borrar"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="Borrar" />
 
         </LinearLayout>
 
@@ -63,6 +73,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="15dp"
-        android:src="@drawable/ic_check"/>
+        android:src="@drawable/ic_check" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
