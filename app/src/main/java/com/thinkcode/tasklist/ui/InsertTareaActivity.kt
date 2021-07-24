@@ -32,7 +32,7 @@ class InsertTareaActivity : AppCompatActivity(), BorrarDialogo.BorrarListener {
         binding.tvFechacreada.text = currentDateTime!!.format(DateTimeFormatter.ISO_DATE)
 
         //Agregamos una categoria por defaul
-        binding.rbOther.isChecked=true
+        binding.rbOther.isChecked = true
 
         tareaViewModel.operacion = intent.getStringExtra(Constantes.OPERACION_KEY)!!
 
@@ -61,9 +61,14 @@ class InsertTareaActivity : AppCompatActivity(), BorrarDialogo.BorrarListener {
             mostrarDialogo()
         }
         binding.btntest.setOnClickListener {
+            val tareaname = binding.etInputTarea.text
+            val prioridad = binding.checkboxImportancia.isChecked
+            //Radiobutton
             val checkCategoryGroup = binding.radioGroup.checkedRadioButtonId
             val category = findViewById<RadioButton>(checkCategoryGroup)
-            Toast.makeText(this, "Categoria ${category.text}", Toast.LENGTH_LONG).show()
+            val fecha = binding.tvFechacreada.text.toString()
+
+            tareaViewModel.guardarTarea(tareaname, prioridad, fecha, category)
         }
 
         tareaViewModel.operacionExitosa.observe(this, Observer {
@@ -81,11 +86,13 @@ class InsertTareaActivity : AppCompatActivity(), BorrarDialogo.BorrarListener {
             tareaViewModel.id.value = intent.getLongExtra(Constantes.ID_TAREA_KEY, 0)
             tareaViewModel.cargarDatos()
             binding.linearEditar.visibility = View.VISIBLE
-            binding.floatSavebutton.visibility = View.GONE
+         //   binding.floatSavebutton.visibility = View.GONE
+            binding.btntest.visibility=View.GONE
 
         } else {
             binding.linearEditar.visibility = View.GONE
-            binding.floatSavebutton.visibility = View.VISIBLE
+           // binding.floatSavebutton.visibility = View.VISIBLE
+            binding.btntest.visibility=View.VISIBLE
 
         }
         tareaViewModel.cargaExitosa.observe(this, Observer {
@@ -108,7 +115,7 @@ class InsertTareaActivity : AppCompatActivity(), BorrarDialogo.BorrarListener {
             "Work" -> binding.rbWork.isChecked = true
             "Home" -> binding.rbHome.isChecked = true
             "Shopping" -> binding.rbShop.isChecked = true
-            "Payments" -> binding.rbPay.isChecked=true
+            "Payments" -> binding.rbPay.isChecked = true
             "Other" -> binding.rbOther.isChecked = true
             else -> {
                 Toast.makeText(this, "No se selectiono ninguna Categoria", Toast.LENGTH_LONG).show()

@@ -13,20 +13,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.thinkcode.tasklist.adapters.TareaAdapter
 import com.thinkcode.tasklist.config.Constantes
 import com.thinkcode.tasklist.databinding.ActivityMainBinding
+import com.thinkcode.tasklist.dialogos.BorrarDialogoMain
 import com.thinkcode.tasklist.ui.InsertTareaActivity
 import com.thinkcode.tasklist.viewmodels.MainViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),BorrarDialogoMain.BorrarListener {
 
     lateinit var binding: ActivityMainBinding
     val mainViewModel: MainViewModel by viewModels()
     var click=1
+    lateinit var dialogo: BorrarDialogoMain
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        dialogo = BorrarDialogoMain(this)
         mainViewModel.start()
 
 
@@ -99,7 +103,8 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.nav_delete -> mainViewModel.deleteChecked()
+          //  R.id.nav_delete -> mainViewModel.deleteChecked()
+              R.id.nav_delete -> mostrarDialogoMain()
             R.id.nav_priority -> mainViewModel.getByPriority()
             R.id.nav_all -> mainViewModel.start()
             R.id.nav_work -> mainViewModel.mostrarPorCategoria("Work")
@@ -109,6 +114,13 @@ class MainActivity : AppCompatActivity() {
 
         }
         return super.onOptionsItemSelected(item)
+    }
+    private fun mostrarDialogoMain() {
+        dialogo.show(supportFragmentManager, "Dialogo Borrar")
+    }
+
+    override fun borrarTarea() {
+        mainViewModel.deleteChecked()
     }
 
 
