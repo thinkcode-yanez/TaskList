@@ -23,16 +23,6 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
 
             tareasList.value = withContext(Dispatchers.IO) {
-                /*  db.tareasDao().insertTarea(arrayListOf<Tarea>(
-
-                       Tarea("Dua sadfksjdf sdlfkjasdflkjsdfk asdlfj", prioridad = true, realizado = true, "2021 07 19",0),
-                       Tarea("Jessica sdfasdfsdf sdafsd f sdsdfasdf", prioridad = false, realizado = true, "2021 07 19",0),
-                       Tarea("Dua asffsdf sadfsdf asf", prioridad = true, realizado = true, "2021 07 19",0),
-                       Tarea("Jessica asdfsf df sf", prioridad = false, realizado = true, "2021 07 19",0),
-                       Tarea("Dua", prioridad = true, realizado = true, "2021 07 19",0),
-                       Tarea("Jessicaas dfsfsd sf sdfsdfs f", prioridad = false, realizado = true, "2021 07 21",0)
-
-                   ))*/
                 db.tareasDao().getAll()
             }!!
 
@@ -119,6 +109,16 @@ class MainViewModel : ViewModel() {
             }!!
         }
 
+
+    }
+
+    fun ordenarPorFecha():List<Tarea>{
+        val tarea= tareasList.value!!.toMutableList()
+
+        tarea.sortBy {it.fecha}
+        tarea.reverse()
+
+      return tarea
 
     }
 

@@ -31,6 +31,9 @@ class InsertTareaActivity : AppCompatActivity(), BorrarDialogo.BorrarListener {
         dialogo = BorrarDialogo(this)//inicializar dialogo
         binding.tvFechacreada.text = currentDateTime!!.format(DateTimeFormatter.ISO_DATE)
 
+        //Agregamos una categoria por defaul
+        binding.rbOther.isChecked=true
+
         tareaViewModel.operacion = intent.getStringExtra(Constantes.OPERACION_KEY)!!
 
 
@@ -40,8 +43,8 @@ class InsertTareaActivity : AppCompatActivity(), BorrarDialogo.BorrarListener {
             //Radiobutton
             val checkCategoryGroup = binding.radioGroup.checkedRadioButtonId
             val category = findViewById<RadioButton>(checkCategoryGroup)
-
             val fecha = binding.tvFechacreada.text.toString()
+
             tareaViewModel.guardarTarea(tareaname, prioridad, fecha, category)
 
         }
@@ -105,6 +108,7 @@ class InsertTareaActivity : AppCompatActivity(), BorrarDialogo.BorrarListener {
             "Work" -> binding.rbWork.isChecked = true
             "Home" -> binding.rbHome.isChecked = true
             "Shopping" -> binding.rbShop.isChecked = true
+            "Payments" -> binding.rbPay.isChecked=true
             "Other" -> binding.rbOther.isChecked = true
             else -> {
                 Toast.makeText(this, "No se selectiono ninguna Categoria", Toast.LENGTH_LONG).show()

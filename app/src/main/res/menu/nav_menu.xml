@@ -28,6 +28,10 @@
         android:icon="@drawable/ic_delete"
         android:title="Mostrar Shopping"
         app:showAsAction="never"/>
+    <item android:id="@+id/nav_Payments"
+        android:icon="@drawable/ic_delete"
+        android:title="Mostrar Payments"
+        app:showAsAction="never"/>
 
 
 </menu>

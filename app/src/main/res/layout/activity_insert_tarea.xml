@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -7,9 +8,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/et_InputTarea"
@@ -25,14 +28,13 @@
             android:layout_height="wrap_content"
             android:text="Tarea Importante" />
 
-            <TextView
-                android:id="@+id/tv_fechacreada"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:textSize="15sp"
-                tools:text="Date created: " />
-
+        <TextView
+            android:id="@+id/tv_fechacreada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textSize="15sp"
+            tools:text="Date created: " />
 
 
         <LinearLayout
@@ -59,42 +61,56 @@
                 android:text="Borrar" />
 
         </LinearLayout>
+
         <RadioGroup
             android:id="@+id/radioGroup"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+
+
             <RadioButton
                 android:id="@+id/rbWork"
-                android:text="Work"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="Work" />
+
             <RadioButton
                 android:id="@+id/rbHome"
-                android:text="Home"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="Home" />
+
             <RadioButton
                 android:id="@+id/rbShop"
-                android:text="Shopping"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="Shopping" />
+
+
+            <RadioButton
+                android:id="@+id/rbPay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payments" />
+
             <RadioButton
                 android:id="@+id/rbOther"
-                android:text="Other"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="Other" />
+
 
         </RadioGroup>
+
         <Button
             android:id="@+id/btntest"
-            android:text="test"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="test"
+            android:layout_gravity="end"/>
 
     </LinearLayout>
-
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -103,6 +119,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="15dp"
-        android:src="@drawable/ic_check" />
+        android:layout_marginEnd="355dp"
+        android:src="@drawable/ic_check"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

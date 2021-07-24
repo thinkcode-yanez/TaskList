@@ -1,5 +1,6 @@
 package com.thinkcode.tasklist.adapters
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.thinkcode.tasklist.MainActivity
 import com.thinkcode.tasklist.R
 import com.thinkcode.tasklist.config.Constantes
 import com.thinkcode.tasklist.databinding.ItemListBinding
@@ -33,11 +33,26 @@ class TareaAdapter(private val dataSet: List<Tarea>) :
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        val item = dataSet?.get(position)
+        val item = dataSet[position]
+        // viewHolder.binding.checkRealizado.isChecked=item.realizado
         viewHolder.enlazarItem(item!!)
 
+        if(item.realizado) {
+            viewHolder.binding.etTarea.setTextColor( ContextCompat.getColor(
+                viewHolder.context,
+                R.color.design_default_color_error
+            ))
+            viewHolder.binding.etTarea.paint.isStrikeThruText=true
+        }else{
+            item.realizado=false
+            viewHolder.binding.etTarea.setTextColor( ContextCompat.getColor(
+                viewHolder.context,
+                R.color.black
+            ))
+            viewHolder.binding.etTarea.paint.isStrikeThruText=false
+        }
 
-        //item.realizado
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -45,27 +60,18 @@ class TareaAdapter(private val dataSet: List<Tarea>) :
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var binding = ItemListBinding.bind(view)
-        var context = view.context
-        val exitoso = MutableLiveData<Boolean>()
-        val modelo = MainViewModel()
-        val mainModelo=MainActivity()
-
+        var context: Context = view.context
+        private val exitoso = MutableLiveData<Boolean>()
+        private val modelo = MainViewModel()
 
         fun enlazarItem(item: Tarea) {
 
-            binding.checkRealizado.isChecked = item.realizado
-            // binding.etTarea.paint.isStrikeThruText=item.realizado
-            if(item.realizado){
-                binding.etTarea.paint.isStrikeThruText=item.realizado
-                binding.etTarea.setTextColor(ContextCompat.getColor(context,R.color.design_default_color_error))
-            }
+             binding.checkRealizado.isChecked = item.realizado
             binding.etTarea.text = item.nombre
             binding.tvFecha.text = item.fecha
             binding.imPrioridad.isVisible = item.prioridad
             //Extra Category
             binding.tvCategoria.text = item.category
-
-
             binding.root.setOnClickListener {
                 val intent = Intent(context, InsertTareaActivity::class.java)
                 intent.putExtra(Constantes.OPERACION_KEY, Constantes.OPERACION_EDITAR)
@@ -73,12 +79,12 @@ class TareaAdapter(private val dataSet: List<Tarea>) :
                 context.startActivity(intent)
             }
 
+
             binding.checkRealizado.setOnClickListener {
 
                 if (binding.checkRealizado.isChecked) {
 
                     item.realizado = true
-                    binding.etTarea.paint.isStrikeThruText=item.realizado
                     exitoso.value = true
                     modelo.guardarCheck(
                         item.realizado,
@@ -88,12 +94,16 @@ class TareaAdapter(private val dataSet: List<Tarea>) :
                         item.category,
                         item.id
                     )
-                    binding.etTarea.setTextColor(ContextCompat.getColor(context,R.color.design_default_color_error))
-
+                    binding.etTarea.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.design_default_color_error
+                        )
+                    )
+                    binding.etTarea.paint.isStrikeThruText=true
                 } else {
-                   // binding.etTarea.paint.isStrikeThruText = true
+
                     item.realizado = false
-                    binding.etTarea.paint.isStrikeThruText=item.realizado
                     modelo.guardarCheck(
                         item.realizado,
                         item.nombre,
@@ -102,17 +112,15 @@ class TareaAdapter(private val dataSet: List<Tarea>) :
                         item.category,
                         item.id
                     )
-                    binding.etTarea.setTextColor(ContextCompat.getColor(context,R.color.black))
+                    binding.etTarea.setTextColor(ContextCompat.getColor(context, R.color.black))
+                    binding.etTarea.paint.isStrikeThruText=false
+
                 }
             }
-
-
-
         }
-
-
-
-
     }
+
 }
+
+
 

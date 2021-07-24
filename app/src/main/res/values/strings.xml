@@ -4,4 +4,5 @@
     <string name="borrar_tarea">Borrar Tarea?</string>
     <string name="yes">Si, Aceptar.</string>
     <string name="cancel">Cancelar</string>
+    <string name="search_task">Search Task</string>
 </resources>

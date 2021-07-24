@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity() {
         })
 
         mainViewModel.cargaWIN.observe(this, Observer {
-                binding.myMainRecycler.adapter = TareaAdapter(mainViewModel.tareasList.value!!)
-                mainViewModel.start()
+            binding.myMainRecycler.adapter = TareaAdapter(mainViewModel.tareasList.value!!)
+            mainViewModel.start()
 
         })
 
@@ -72,28 +72,40 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        binding.btnALL.setOnClickListener {
-            mainViewModel.mostrarPorCategoria("Work")
-        }
+        binding.btnImageOrder.setOnClickListener {
 
+            if (click == 1) {
+                val list = mainViewModel.ordenarPorFecha()
+                binding.btnImageOrder.setBackgroundResource(R.drawable.ic_up)
+                binding.myMainRecycler.adapter = TareaAdapter(list)
+                click=2
+            } else {
+                val list = mainViewModel.tareasList.value
+                binding.btnImageOrder.setBackgroundResource(R.drawable.ic_down)
+                binding.myMainRecycler.adapter= list?.let { it1 -> TareaAdapter(it1) }
+                click=1
+
+            }
+        }
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.nav_menu,menu)
+        menuInflater.inflate(R.menu.nav_menu, menu)
 
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when(item.itemId){
-            R.id.nav_delete->mainViewModel.deleteChecked()
-            R.id.nav_priority->mainViewModel.getByPriority()
-            R.id.nav_all->mainViewModel.start()
-            R.id.nav_work->mainViewModel.mostrarPorCategoria("Work")
-            R.id.nav_home->mainViewModel.mostrarPorCategoria("Home")
-            R.id.nav_Shopping->mainViewModel.mostrarPorCategoria("Shopping")
+        when (item.itemId) {
+            R.id.nav_delete -> mainViewModel.deleteChecked()
+            R.id.nav_priority -> mainViewModel.getByPriority()
+            R.id.nav_all -> mainViewModel.start()
+            R.id.nav_work -> mainViewModel.mostrarPorCategoria("Work")
+            R.id.nav_home -> mainViewModel.mostrarPorCategoria("Home")
+            R.id.nav_Shopping -> mainViewModel.mostrarPorCategoria("Shopping")
+            R.id.nav_Payments->mainViewModel.mostrarPorCategoria("Payments")
 
         }
         return super.onOptionsItemSelected(item)
