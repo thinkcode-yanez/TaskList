@@ -72,11 +72,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:gravity="center_vertical">
+                android:gravity="center">
 
                 <CheckBox
                     android:id="@+id/checkbox_importancia"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tarea Importante" />
 
@@ -84,7 +84,7 @@
                     android:id="@+id/tv_fechacreada"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal|center_vertical"
                     android:textSize="15sp"
                     tools:text="Date created: " />
 

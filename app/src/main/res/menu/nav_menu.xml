@@ -10,27 +10,27 @@
     <item android:id="@+id/nav_priority"
         android:titleCondensed="hola"
         android:icon="@drawable/ic_delete"
-        android:title="Mostrar Importantes"
+        android:title="Show Priority"
         app:showAsAction="never"/>
     <item android:id="@+id/nav_all"
         android:icon="@drawable/ic_delete"
-        android:title="Mostrar Todos"
+        android:title="Show All"
         app:showAsAction="never"/>
     <item android:id="@+id/nav_work"
         android:icon="@drawable/ic_delete"
-        android:title="Mostrar Work"
+        android:title="Show Work"
         app:showAsAction="never"/>
     <item android:id="@+id/nav_home"
         android:icon="@drawable/ic_delete"
-        android:title="Mostrar Home"
+        android:title="Show Home"
         app:showAsAction="never"/>
     <item android:id="@+id/nav_Shopping"
         android:icon="@drawable/ic_delete"
-        android:title="Mostrar Shopping"
+        android:title="Show Shopping"
         app:showAsAction="never"/>
     <item android:id="@+id/nav_Payments"
         android:icon="@drawable/ic_delete"
-        android:title="Mostrar Payments"
+        android:title="Show Payments"
         app:showAsAction="never"/>
 
 

@@ -58,9 +58,14 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         Handler().postDelayed({
-            val intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags((Intent.FLAG_ACTIVITY_CLEAR_TOP))
+           // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
+            finish()
         },2000)
+
+
 
     }
 

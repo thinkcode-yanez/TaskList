@@ -23,6 +23,7 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
 
             tareasList.value = withContext(Dispatchers.IO) {
+
                 db.tareasDao().getAll()
             }!!
 

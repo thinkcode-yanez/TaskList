@@ -25,6 +25,7 @@ class TareaViewModel:ViewModel() {
     var operacion= Constantes.OPERACION_INSERTAR
     val operacionExitosa= MutableLiveData<Boolean>()
     var cargaExitosa = MutableLiveData<Boolean>()
+    val operacionExitosaEditar=MutableLiveData<Boolean>()
 
     init{
 
@@ -64,7 +65,8 @@ class TareaViewModel:ViewModel() {
                         val result= withContext(Dispatchers.IO){
                             db.tareasDao().updateTarea(mTarea)
                         }
-                        operacionExitosa.value=(result>0)
+                       // operacionExitosa.value=(result>0)
+                        operacionExitosaEditar.value=(result>0)
                     }
 
                 }

@@ -24,12 +24,19 @@ class InsertTareaActivity : AppCompatActivity(), BorrarDialogo.BorrarListener {
     lateinit var dialogo: BorrarDialogo
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInsertTareaBinding.inflate(layoutInflater)
         setContentView(binding.root)
         dialogo = BorrarDialogo(this)//inicializar dialogo
         binding.tvFechacreada.text = currentDateTime!!.format(DateTimeFormatter.ISO_DATE)
+
+        val actionbar=supportActionBar
+
+        if (actionbar != null) {
+            actionbar.setDisplayHomeAsUpEnabled(true)
+        }
 
         //Agregamos una categoria por defaul
         binding.rbOther.isChecked = true
@@ -73,16 +80,26 @@ class InsertTareaActivity : AppCompatActivity(), BorrarDialogo.BorrarListener {
 
         tareaViewModel.operacionExitosa.observe(this, Observer {
             if (it) {
-                mostrarMensaje("Operacion Exitosa")
-                irAlInicio()
+                mostrarMensaje("Task successfully Saved")
+               // irAlInicio()
+                clearCamps()
 
             } else {
-                mostrarMensaje("Ocurrio un Error")
+                mostrarMensaje("Error ")
+            }
+        })
+        tareaViewModel.operacionExitosaEditar.observe(this, Observer {
+            if (it) {
+                mostrarMensaje("Task Edited and Saved successfully ")
+                 irAlInicio()
+
+            } else {
+                mostrarMensaje("Error ")
             }
         })
 
         if (tareaViewModel.operacion == Constantes.OPERACION_EDITAR) {
-            Toast.makeText(this, "Si entro a editar", Toast.LENGTH_LONG).show()
+           // Toast.makeText(this, "Si entro a editar", Toast.LENGTH_LONG).show()
             tareaViewModel.id.value = intent.getLongExtra(Constantes.ID_TAREA_KEY, 0)
             tareaViewModel.cargarDatos()
             binding.linearEditar.visibility = View.VISIBLE
@@ -108,9 +125,21 @@ class InsertTareaActivity : AppCompatActivity(), BorrarDialogo.BorrarListener {
 
     }
 
+    private fun clearCamps() {
+        binding.etInputTarea.text.clear()
+        binding.rbOther.isChecked=true
+        binding.checkboxImportancia.isChecked=false
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+      // mainViewModel.ordenarPorFecha()
+        return true
+    }
+
     private fun checkRadioGroup() {
         val id = tareaViewModel.categoria.value
-        Toast.makeText(this, "la id es ${id}", Toast.LENGTH_LONG).show()
+      //  Toast.makeText(this, "la id es ${id}", Toast.LENGTH_LONG).show()
         when (id) {
             "Work" -> binding.rbWork.isChecked = true
             "Home" -> binding.rbHome.isChecked = true

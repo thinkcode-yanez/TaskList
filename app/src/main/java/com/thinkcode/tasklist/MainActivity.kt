@@ -39,7 +39,10 @@ class MainActivity : AppCompatActivity(),BorrarDialogoMain.BorrarListener {
         }
 
         mainViewModel.tareasList.observe(this, Observer {
-            binding.myMainRecycler.adapter = TareaAdapter(it)
+
+            val list = mainViewModel.ordenarPorFecha()
+            binding.myMainRecycler.adapter = TareaAdapter(list)
+           // binding.myMainRecycler.adapter = TareaAdapter(it)
 
         })
 
@@ -79,20 +82,29 @@ class MainActivity : AppCompatActivity(),BorrarDialogoMain.BorrarListener {
         binding.btnImageOrder.setOnClickListener {
 
             if (click == 1) {
-                val list = mainViewModel.ordenarPorFecha()
+                val list = mainViewModel.tareasList.value
+              //  val list = mainViewModel.ordenarPorFecha()
                 binding.btnImageOrder.setBackgroundResource(R.drawable.ic_up)
-                binding.myMainRecycler.adapter = TareaAdapter(list)
+                binding.myMainRecycler.adapter = list?.let { it1 -> TareaAdapter(it1) }
                 click=2
             } else {
-                val list = mainViewModel.tareasList.value
+               // val list = mainViewModel.tareasList.value
+                val list = mainViewModel.ordenarPorFecha()
                 binding.btnImageOrder.setBackgroundResource(R.drawable.ic_down)
-                binding.myMainRecycler.adapter= list?.let { it1 -> TareaAdapter(it1) }
+                binding.myMainRecycler.adapter= list.let { it1 -> TareaAdapter(it1) }
                 click=1
 
             }
         }
 
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.nav_menu, menu)
@@ -121,6 +133,11 @@ class MainActivity : AppCompatActivity(),BorrarDialogoMain.BorrarListener {
 
     override fun borrarTarea() {
         mainViewModel.deleteChecked()
+    }
+
+    override fun onResume() {
+        mainViewModel.start()
+        super.onResume()
     }
 
 
