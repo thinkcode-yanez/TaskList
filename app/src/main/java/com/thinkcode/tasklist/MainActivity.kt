@@ -4,7 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Toast
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -12,19 +13,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.thinkcode.tasklist.adapters.TareaAdapter
 import com.thinkcode.tasklist.config.Constantes
 import com.thinkcode.tasklist.databinding.ActivityMainBinding
+import com.thinkcode.tasklist.dialogos.BorrarDialogoMain
 import com.thinkcode.tasklist.ui.InsertTareaActivity
 import com.thinkcode.tasklist.viewmodels.MainViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),BorrarDialogoMain.BorrarListener {
 
-    lateinit var binding:ActivityMainBinding
-    val mainViewModel:MainViewModel by viewModels()
+    lateinit var binding: ActivityMainBinding
+    val mainViewModel: MainViewModel by viewModels()
+    var click=1
+    lateinit var dialogo: BorrarDialogoMain
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        binding= ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        dialogo = BorrarDialogoMain(this)
         mainViewModel.start()
 
 
@@ -33,21 +39,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.tareasList.observe(this, Observer {
-            binding.myMainRecycler.adapter=TareaAdapter(it)
-            Toast.makeText(this,"Si entro a tarealist",Toast.LENGTH_LONG).show()
+
+            val list = mainViewModel.ordenarPorFecha()
+            binding.myMainRecycler.adapter = TareaAdapter(list)
+           // binding.myMainRecycler.adapter = TareaAdapter(it)
 
         })
 
         mainViewModel.cargaWIN.observe(this, Observer {
-            if(it){
-                Toast.makeText(this,"Si cargo bien el check",Toast.LENGTH_LONG).show()
-                binding.myMainRecycler.refreshDrawableState()
-            }else{
-                Toast.makeText(this,"no cargo nada",Toast.LENGTH_LONG).show()
-            }
+            binding.myMainRecycler.adapter = TareaAdapter(mainViewModel.tareasList.value!!)
+            mainViewModel.start()
+
         })
 
-        binding.etBuscar.addTextChangedListener(object:TextWatcher{
+        binding.etBuscar.addTextChangedListener(object : TextWatcher {
+
+
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
@@ -57,26 +64,81 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                if(p0.toString().isNotEmpty()){
+                if (p0.toString().isNotEmpty()) {
                     mainViewModel.buscarTarea(p0)
-                }else if(p0.toString().isEmpty()){
+                } else if (p0.toString().isEmpty()) {
                     mainViewModel.start()
                 }
             }
         })
 
         binding.btnAbrirFormulario.setOnClickListener {
-            val intent=Intent(this,InsertTareaActivity::class.java)
-            intent.putExtra(Constantes.OPERACION_KEY,Constantes.OPERACION_INSERTAR)
+            val intent = Intent(this, InsertTareaActivity::class.java)
+            intent.putExtra(Constantes.OPERACION_KEY, Constantes.OPERACION_INSERTAR)
             startActivity(intent)
 
         }
+
+        binding.btnImageOrder.setOnClickListener {
+
+            if (click == 1) {
+                val list = mainViewModel.tareasList.value
+              //  val list = mainViewModel.ordenarPorFecha()
+                binding.btnImageOrder.setBackgroundResource(R.drawable.ic_up)
+                binding.myMainRecycler.adapter = list?.let { it1 -> TareaAdapter(it1) }
+                click=2
+            } else {
+               // val list = mainViewModel.tareasList.value
+                val list = mainViewModel.ordenarPorFecha()
+                binding.btnImageOrder.setBackgroundResource(R.drawable.ic_down)
+                binding.myMainRecycler.adapter= list.let { it1 -> TareaAdapter(it1) }
+                click=1
+
+            }
+        }
+
     }
-    fun actualizar(){
-        mainViewModel.tareasList.observe(this, Observer {
-            binding.myMainRecycler.adapter=TareaAdapter(it)
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 
 
-        })
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.nav_menu, menu)
+
+        return true
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+          //  R.id.nav_delete -> mainViewModel.deleteChecked()
+              R.id.nav_delete -> mostrarDialogoMain()
+            R.id.nav_priority -> mainViewModel.getByPriority()
+            R.id.nav_all -> mainViewModel.start()
+            R.id.nav_work -> mainViewModel.mostrarPorCategoria("Work")
+            R.id.nav_home -> mainViewModel.mostrarPorCategoria("Home")
+            R.id.nav_Shopping -> mainViewModel.mostrarPorCategoria("Shopping")
+            R.id.nav_Payments->mainViewModel.mostrarPorCategoria("Payments")
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
+    private fun mostrarDialogoMain() {
+        dialogo.show(supportFragmentManager, "Dialogo Borrar")
+    }
+
+    override fun borrarTarea() {
+        mainViewModel.deleteChecked()
+    }
+
+    override fun onResume() {
+        mainViewModel.start()
+        super.onResume()
+    }
+
+
 }

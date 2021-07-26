@@ -2,6 +2,7 @@ package com.thinkcode.tasklist.viewmodels
 
 import android.text.Editable
 import android.util.Log
+import android.widget.RadioButton
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,6 +17,7 @@ class TareaViewModel:ViewModel() {
 
     var id=MutableLiveData<Long>()
     var nombretarea=MutableLiveData<String>()
+    var categoria=MutableLiveData<String>()
     var checked:Boolean=false
     var priority=MutableLiveData<Boolean>()
     var fecha=MutableLiveData<String>()
@@ -23,16 +25,22 @@ class TareaViewModel:ViewModel() {
     var operacion= Constantes.OPERACION_INSERTAR
     val operacionExitosa= MutableLiveData<Boolean>()
     var cargaExitosa = MutableLiveData<Boolean>()
+    val operacionExitosaEditar=MutableLiveData<Boolean>()
 
     init{
 
     }
-    fun guardarTarea(tareaname: Editable, prioridad: Boolean, fecha: CharSequence) {
+    fun guardarTarea(
+        tareaname: Editable,
+        prioridad: Boolean,
+        fecha: CharSequence,
+        category: RadioButton
+    ) {
         nombretarea.value= tareaname.toString()
         priority.value=prioridad
 
         if(validarInfo()){
-            var mTarea= Tarea(nombretarea.value!!,priority.value!!,checked,fecha.toString(),0)
+            var mTarea= Tarea(nombretarea.value!!,priority.value!!,checked,fecha.toString(),category.text.toString(),0)
 
             when(operacion){
                 Constantes.OPERACION_INSERTAR->{
@@ -57,7 +65,8 @@ class TareaViewModel:ViewModel() {
                         val result= withContext(Dispatchers.IO){
                             db.tareasDao().updateTarea(mTarea)
                         }
-                        operacionExitosa.value=(result>0)
+                       // operacionExitosa.value=(result>0)
+                        operacionExitosaEditar.value=(result>0)
                     }
 
                 }
@@ -83,6 +92,7 @@ class TareaViewModel:ViewModel() {
             nombretarea.value=tarea.nombre
             fecha.value=tarea.fecha
             priority.value=tarea.prioridad
+            categoria.value=tarea.category//Agregando categoria
             cargaExitosa.value=tarea.equals(1)
             Log.d("mensaje2",priority.value.toString())
 
@@ -97,7 +107,7 @@ class TareaViewModel:ViewModel() {
 
     fun eliminarTarea() {
 
-        var mTarea= Tarea("",priority.value!!,checked,"",id.value!!)
+        var mTarea= Tarea("",priority.value!!,checked,"",categoria.value!!,id.value!!)
         viewModelScope.launch {
             val result= withContext(Dispatchers.IO){
 

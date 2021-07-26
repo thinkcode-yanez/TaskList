@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="8dp">
+    android:orientation="vertical"
+    android:padding="4dp">
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="10dp"
@@ -40,6 +41,7 @@
                 android:ellipsize="end"
                 android:textColor="@color/black"
                 android:textSize="18sp"
+                android:layout_marginEnd="4dp"
                 android:textStyle="bold"
                 tools:text="Tarea a insertar" />
 
@@ -52,16 +54,38 @@
                 android:src="@drawable/ic_prioridad" />
 
         </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tvCategoria"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:layout_marginStart="10dp"
+            tools:text="Categoria">
+
+        </TextView>
         <TextView
             android:id="@+id/tvFecha"
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Fecha"
-            android:paddingEnd="28dp"
-            android:gravity="bottom|end">
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:textSize="15sp"
+            android:gravity="end"
+            tools:text="Fecha">
 
         </TextView>
 
-    </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
 
 </LinearLayout>

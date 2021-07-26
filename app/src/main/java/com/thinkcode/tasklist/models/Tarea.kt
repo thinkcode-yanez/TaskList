@@ -10,6 +10,7 @@ data class Tarea(
     val prioridad:Boolean=false,
     var realizado:Boolean=false,
     val fecha:String,
+    val category:String,
     @PrimaryKey(autoGenerate = true)
     var id:Long
 )

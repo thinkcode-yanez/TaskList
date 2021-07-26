@@ -15,8 +15,7 @@ class MainViewModel : ViewModel() {
 
     val tareasList = MutableLiveData<List<Tarea>>()
     var busqueda = MutableLiveData<String>()
-    val cargaWIN = MutableLiveData<Boolean>()
-
+    var cargaWIN = MutableLiveData<Boolean>()
 
 
     fun start() {
@@ -24,16 +23,7 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
 
             tareasList.value = withContext(Dispatchers.IO) {
-                /*  db.tareasDao().insertTarea(arrayListOf<Tarea>(
 
-                       Tarea("Dua sadfksjdf sdlfkjasdflkjsdfk asdlfj", prioridad = true, realizado = true, "2021 07 19",0),
-                       Tarea("Jessica sdfasdfsdf sdafsd f sdsdfasdf", prioridad = false, realizado = true, "2021 07 19",0),
-                       Tarea("Dua asffsdf sadfsdf asf", prioridad = true, realizado = true, "2021 07 19",0),
-                       Tarea("Jessica asdfsf df sf", prioridad = false, realizado = true, "2021 07 19",0),
-                       Tarea("Dua", prioridad = true, realizado = true, "2021 07 19",0),
-                       Tarea("Jessicaas dfsfsd sf sdfsdfs f", prioridad = false, realizado = true, "2021 07 21",0)
-
-                   ))*/
                 db.tareasDao().getAll()
             }!!
 
@@ -57,22 +47,80 @@ class MainViewModel : ViewModel() {
         nombre: String,
         fecha: String,
         prioridad: Boolean,
+        cateoria: String,
         id: Long
     ) {
 
-       var mTarea= Tarea(nombre,prioridad,realizado,fecha,id)
-
-
+        var mTarea = Tarea(nombre, prioridad, realizado, fecha, cateoria, id)
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
                 db.tareasDao().updateTarea(mTarea)
             }
-            cargaWIN.value=true
+            //  cargaWIN.value=true
+
+        }
+        Log.d("mensajeMV", mTarea.toString())
+    }
+
+    fun deleteChecked() {
+        for (tarea in tareasList.value!!) {
+            if (tarea.realizado) {
+                val mTarea = Tarea(
+                    tarea.nombre,
+                    tarea.prioridad,
+                    tarea.realizado,
+                    tarea.fecha,
+                    tarea.category,
+                    tarea.id
+                )
+                viewModelScope.launch {
+                    val result = withContext(Dispatchers.IO) {
+                        db.tareasDao().deleteAll(mTarea)
+                    }
+                    cargaWIN.value = (result > 0)
+                }
+
+            }
+        }
+    }
+
+    fun getByPriority() {
+        for (tarea in tareasList.value!!) {
+
+            if (tarea.prioridad == true) {
+                viewModelScope.launch {
+                    tareasList.value = withContext(Dispatchers.IO) {
+                        db.tareasDao().getByPrioridad(tarea.prioridad)
+                    }!!
+                }
+
+            }
+
 
         }
 
+    }
 
-        Log.d("mensajeMV",mTarea.toString())
+    fun mostrarPorCategoria(s: String) {
+
+        val id=s
+        viewModelScope.launch {
+            tareasList.value= withContext(Dispatchers.IO){
+                db.tareasDao().getByCategory(id)
+            }!!
+        }
+
+
+    }
+
+    fun ordenarPorFecha():List<Tarea>{
+        val tarea= tareasList.value!!.toMutableList()
+
+        tarea.sortBy {it.fecha}
+        tarea.reverse()
+
+      return tarea
+
     }
 
 

@@ -1,57 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/et_InputTarea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Add the task"
-            android:inputType="text"/>
-        <CheckBox
-            android:id="@+id/checkbox_importancia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tarea Importante"/>
-        <TextView
-            android:id="@+id/tv_fechacreada"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Date created: "/>
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLines="5" />
+
 
         <LinearLayout
-            android:id="@+id/linearEditar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp"
-            android:gravity="center_horizontal"
-            android:visibility="gone">
-
-
-            <Button
-                android:id="@+id/btnEditar"
-                android:text="Editar"
+            android:orientation="horizontal">
+            <RadioGroup
+                android:id="@+id/radioGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"/>
-            <Button
-                android:id="@+id/btnBorrar"
-                android:text="Borrar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:orientation="vertical">
+
+
+                <RadioButton
+                    android:id="@+id/rbWork"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Work" />
+
+                <RadioButton
+                    android:id="@+id/rbHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Home" />
+
+                <RadioButton
+                    android:id="@+id/rbShop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shopping" />
+
+
+                <RadioButton
+                    android:id="@+id/rbPay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Payments" />
+
+                <RadioButton
+                    android:id="@+id/rbOther"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Other" />
+
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <CheckBox
+                    android:id="@+id/checkbox_importancia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tarea Importante" />
+
+                <TextView
+                    android:id="@+id/tv_fechacreada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:textSize="15sp"
+                    tools:text="Date created: " />
+
+
+                <LinearLayout
+                    android:id="@+id/linearEditar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    >
+
+
+                    <Button
+                        android:id="@+id/btnEditar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="4dp"
+                        android:text="SAVE" />
+
+                    <Button
+                        android:id="@+id/btnBorrar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DELETE" />
+
+                </LinearLayout>
+                <Button
+                    android:id="@+id/btntest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save"
+                    android:layout_gravity="center_horizontal|center_vertical"/>
+
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
+
+
+
+
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:gravity="bottom|end"
+        android:textColor="@color/black"
+        android:text="@string/thinkcode_2021"
+        android:textSize="15sp"
+        android:textStyle="italic|bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -60,6 +151,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="15dp"
-        android:src="@drawable/ic_check"/>
+        android:layout_marginEnd="355dp"
+        android:src="@drawable/ic_check"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"/>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

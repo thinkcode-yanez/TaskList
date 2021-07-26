@@ -16,6 +16,12 @@ interface TareasDao {
     @Query("SELECT * FROM tarea_tabla WHERE id= :id")
     suspend fun getById(id:Long):Tarea
 
+    @Query("SELECT * FROM tarea_tabla WHERE prioridad= :priority")
+    suspend fun getByPrioridad(priority:Boolean):List<Tarea>
+
+    @Query("SELECT * FROM tarea_tabla WHERE category= :categoria")
+    suspend fun getByCategory(categoria:String):List<Tarea>
+
     @Insert
     suspend fun insertTarea(tarea:List<Tarea>):List<Long>//Devuelve long de las llaves que se iran generando
 
@@ -24,6 +30,9 @@ interface TareasDao {
 
     @Delete
     suspend fun deleteAll(tarea:Tarea):Int
+
+
+
 
 
 }

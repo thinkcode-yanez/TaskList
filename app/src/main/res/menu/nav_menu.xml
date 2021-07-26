@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/nav_delete"
+        android:icon="@drawable/ic_delete"
+        android:title="Delete Selected"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/nav_priority"
+        android:titleCondensed="hola"
+        android:icon="@drawable/ic_delete"
+        android:title="Show Priority"
+        app:showAsAction="never"/>
+    <item android:id="@+id/nav_all"
+        android:icon="@drawable/ic_delete"
+        android:title="Show All"
+        app:showAsAction="never"/>
+    <item android:id="@+id/nav_work"
+        android:icon="@drawable/ic_delete"
+        android:title="Show Work"
+        app:showAsAction="never"/>
+    <item android:id="@+id/nav_home"
+        android:icon="@drawable/ic_delete"
+        android:title="Show Home"
+        app:showAsAction="never"/>
+    <item android:id="@+id/nav_Shopping"
+        android:icon="@drawable/ic_delete"
+        android:title="Show Shopping"
+        app:showAsAction="never"/>
+    <item android:id="@+id/nav_Payments"
+        android:icon="@drawable/ic_delete"
+        android:title="Show Payments"
+        app:showAsAction="never"/>
+
+
+</menu>
